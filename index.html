@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirakl Nexus - Agentic Commerce Discovery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #06b6d4;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg-dark: #030712;
+            --bg-card: #111827;
+            --bg-elevated: #1f2937;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border: #374151;
+            --nexus-gradient: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 50%, #10b981 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.1) 0%, transparent 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--nexus-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: var(--nexus-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-badges {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .badge.live {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .badge.live::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .main {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: var(--nexus-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .workspace { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-body { padding: 1.5rem; }
+
+        /* Search Interface */
+        .search-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            background: var(--bg-elevated);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-btn {
+            background: var(--nexus-gradient);
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .search-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Query Suggestions */
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .suggestion-chip {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .suggestion-chip:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        /* Agent Thinking */
+        .agent-panel {
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .agent-panel.active {
+            display: block;
+        }
+
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .agent-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--nexus-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .agent-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .agent-status {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .thinking-dots {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .thinking-dots span {
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .thinking-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .thinking-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .agent-steps {
+            margin-top: 1rem;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+
+        .step-item.active {
+            opacity: 1;
+        }
+
+        .step-item.complete {
+            opacity: 1;
+        }
+
+        .step-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .step-item.active .step-icon {
+            background: var(--primary);
+        }
+
+        .step-item.complete .step-icon {
+            background: var(--success);
+        }
+
+        .step-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .step-item.active .step-text,
+        .step-item.complete .step-text {
+            color: var(--text-primary);
+        }
+
+        /* Results */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .results-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .results-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .product-results {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .product-card {
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            border-color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .product-card.recommended {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .product-card.recommended::before {
+            content: '⭐ AI Recommended';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: var(--success);
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .product-card {
+            position: relative;
+        }
+
+        .product-thumb {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--bg-dark);
+        }
+
+        .product-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-seller {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-attributes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .attr-tag {
+            background: var(--bg-card);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .product-pricing {
+            text-align: right;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .product-original-price {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .match-score {
+            font-size: 0.75rem;
+            color: var(--primary);
+            margin-top: 0.5rem;
+        }
+
+        /* Comparison Table */
+        .comparison-section {
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .comparison-section.active {
+            display: block;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .comparison-table td {
+            color: var(--text-secondary);
+        }
+
+        .comparison-table tr:hover td {
+            background: var(--bg-elevated);
+        }
+
+        .check-icon { color: var(--success); }
+        .cross-icon { color: var(--danger); }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .metrics-card {
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .metrics-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .metrics-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .metrics-subtitle {
+            font-size: 0.75rem;
+            color: var(--success);
+            margin-top: 0.25rem;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .stat-label { color: var(--text-muted); }
+        .stat-value { font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+
+        /* Agent Summary */
+        .summary-card {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .summary-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+
+        .summary-text {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon { font-size: 1.5rem; }
+        .toast-title { font-size: 0.9rem; font-weight: 600; }
+        .toast-message { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Filter Chips */
+        .filters-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-chip:hover,
+        .filter-chip.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🤖</div>
+                <div>
+                    <div class="logo-text">Mirakl Nexus</div>
+                    <div class="logo-subtitle">Agentic Commerce</div>
+                </div>
+            </div>
+            <div class="header-badges">
+                <span class="badge live">Agent Active</span>
+                <span class="badge">Stripe Integration</span>
+                <span class="badge">Multi-Marketplace</span>
+                <span class="badge">Real-time Discovery</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="hero">
+            <h1>🔮 AI-Powered Product Discovery</h1>
+            <p>Let AI agents search, compare, and find the best products across all Mirakl-powered marketplaces</p>
+        </div>
+
+        <div class="workspace">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">🔍 Natural Language Search</h3>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">Powered by AI Agent</span>
+                </div>
+                <div class="card-body">
+                    <div class="search-container">
+                        <div class="search-box">
+                            <input type="text" class="search-input" id="searchInput" 
+                                placeholder="Describe what you're looking for..." 
+                                onkeypress="if(event.key==='Enter') search()">
+                            <button class="search-btn" onclick="search()" id="searchBtn">
+                                <span>🤖</span> Search
+                            </button>
+                        </div>
+                        <div class="suggestions">
+                            <span class="suggestion-chip" onclick="useSuggestion(this)">Wireless headphones under €100 with noise cancellation</span>
+                            <span class="suggestion-chip" onclick="useSuggestion(this)">Best leather bags for business travel</span>
+                            <span class="suggestion-chip" onclick="useSuggestion(this)">Running shoes with good arch support</span>
+                            <span class="suggestion-chip" onclick="useSuggestion(this)">Sustainable fashion from European brands</span>
+                        </div>
+                    </div>
+
+                    <div class="agent-panel" id="agentPanel">
+                        <div class="agent-header">
+                            <div class="agent-avatar">🤖</div>
+                            <div>
+                                <div class="agent-name">Nexus Discovery Agent</div>
+                                <div class="agent-status" id="agentStatus">
+                                    Analyzing query <span class="thinking-dots"><span></span><span></span><span></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="agent-steps" id="agentSteps">
+                            <div class="step-item" id="step1">
+                                <div class="step-icon">1</div>
+                                <div class="step-text">Understanding search intent and extracting key attributes...</div>
+                            </div>
+                            <div class="step-item" id="step2">
+                                <div class="step-icon">2</div>
+                                <div class="step-text">Querying product catalogs across 450+ marketplaces...</div>
+                            </div>
+                            <div class="step-item" id="step3">
+                                <div class="step-icon">3</div>
+                                <div class="step-text">Analyzing product specifications and pricing...</div>
+                            </div>
+                            <div class="step-item" id="step4">
+                                <div class="step-icon">4</div>
+                                <div class="step-text">Comparing seller ratings and availability...</div>
+                            </div>
+                            <div class="step-item" id="step5">
+                                <div class="step-icon">5</div>
+                                <div class="step-text">Ranking results by relevance and value...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filters-section" id="filtersSection" style="display: none;">
+                        <div class="filters-row">
+                            <span class="filter-chip active">All Results</span>
+                            <span class="filter-chip" onclick="toggleFilter(this)">Free Shipping</span>
+                            <span class="filter-chip" onclick="toggleFilter(this)">Prime Available</span>
+                            <span class="filter-chip" onclick="toggleFilter(this)">Eco-Friendly</span>
+                            <span class="filter-chip" onclick="toggleFilter(this)">Top Rated</span>
+                        </div>
+                    </div>
+
+                    <div class="results-section" id="resultsSection">
+                        <div class="results-header">
+                            <span class="results-title">🎯 AI-Curated Results</span>
+                            <span class="results-count" id="resultsCount">5 products found across 12 marketplaces</span>
+                        </div>
+                        <div class="product-results" id="productResults"></div>
+
+                        <div class="comparison-section" id="comparisonSection">
+                            <h4 style="font-size: 0.95rem; margin-bottom: 1rem;">📊 Quick Comparison</h4>
+                            <table class="comparison-table" id="comparisonTable"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">📈 Search Analytics</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="metrics-card">
+                            <div class="metrics-title">Marketplaces Queried</div>
+                            <div class="metrics-value" id="marketplaceCount">—</div>
+                            <div class="metrics-subtitle" id="marketplaceSubtitle">Ready to search</div>
+                        </div>
+
+                        <div style="margin-top: 1rem;">
+                            <div class="stat-row">
+                                <span class="stat-label">Query Time</span>
+                                <span class="stat-value" id="queryTime">—</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Products Analyzed</span>
+                                <span class="stat-value" id="productsAnalyzed">—</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Price Range Found</span>
+                                <span class="stat-value" id="priceRange">—</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Avg. Match Score</span>
+                                <span class="stat-value" id="avgMatch">—</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Agent Model</span>
+                                <span class="stat-value">GPT-4 Turbo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="summaryCard" style="display: none;">
+                    <div class="card-header">
+                        <h3 class="card-title">🧠 AI Summary</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="summary-card">
+                            <div class="summary-title">Agent Recommendation</div>
+                            <div class="summary-text" id="summaryText"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">💡 How Nexus Works</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7;">
+                            <p style="margin-bottom: 0.75rem;">🔍 <strong>Intent Analysis:</strong> AI understands natural language queries</p>
+                            <p style="margin-bottom: 0.75rem;">🌐 <strong>Multi-Marketplace:</strong> Searches across all Mirakl partners</p>
+                            <p style="margin-bottom: 0.75rem;">📊 <strong>Smart Ranking:</strong> Considers price, reviews, shipping</p>
+                            <p>💳 <strong>Instant Checkout:</strong> Stripe-powered transactions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="toast" id="toast">
+        <span class="toast-icon">✅</span>
+        <div class="toast-content">
+            <div class="toast-title" id="toastTitle">Success!</div>
+            <div class="toast-message" id="toastMessage">Search complete</div>
+        </div>
+    </div>
+
+    <script>
+        // Mock product database
+        const mockProducts = {
+            'headphones': [
+                { id: 1, name: 'Sony WH-1000XM5', seller: 'Best Buy Marketplace', price: 89.99, originalPrice: 129.99, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200', attributes: ['Noise Cancelling', 'Bluetooth 5.2', '30hr Battery'], match: 98, marketplace: 'Best Buy' },
+                { id: 2, name: 'Bose QuietComfort 45', seller: 'Macy\'s Audio', price: 94.99, originalPrice: 149.99, image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200', attributes: ['ANC', 'Comfort Fit', '24hr Battery'], match: 95, marketplace: 'Macy\'s' },
+                { id: 3, name: 'Sennheiser HD 450BT', seller: 'Decathlon Sound', price: 79.99, originalPrice: 99.99, image: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=200', attributes: ['Active NC', 'Foldable', '30hr Battery'], match: 91, marketplace: 'Decathlon' },
+                { id: 4, name: 'JBL Live 660NC', seller: 'Urban Audio Hub', price: 69.99, originalPrice: 89.99, image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=200', attributes: ['Adaptive NC', 'Multi-Point', '40hr Battery'], match: 88, marketplace: 'Urban Outfitters' },
+                { id: 5, name: 'Audio-Technica ATH-M50xBT2', seller: 'Nordstrom Tech', price: 99.99, originalPrice: 139.99, image: 'https://images.unsplash.com/photo-1487215078519-e21cc028cb29?w=200', attributes: ['Studio Sound', 'Wired/Wireless', '50hr Battery'], match: 85, marketplace: 'Nordstrom' }
+            ],
+            'bags': [
+                { id: 6, name: 'Samsonite Classic Leather', seller: 'Galeries Lafayette', price: 189.99, originalPrice: 249.99, image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200', attributes: ['Genuine Leather', 'Laptop Sleeve', 'TSA Friendly'], match: 97, marketplace: 'Galeries Lafayette' },
+                { id: 7, name: 'Tumi Alpha Brief', seller: 'Best Buy Business', price: 249.99, originalPrice: 299.99, image: 'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=200', attributes: ['Ballistic Nylon', 'USB Port', 'Organizer'], match: 94, marketplace: 'Best Buy' },
+                { id: 8, name: 'Coach Metropolitan', seller: 'Macy\'s Luxury', price: 159.99, originalPrice: 219.99, image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=200', attributes: ['Premium Leather', 'Classic Design', 'Padded Straps'], match: 90, marketplace: 'Macy\'s' },
+                { id: 9, name: 'Victorinox Werks Pro', seller: 'Decathlon Travel', price: 179.99, originalPrice: 229.99, image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=200', attributes: ['Expandable', 'Security Lock', 'Warranty'], match: 87, marketplace: 'Decathlon' }
+            ],
+            'shoes': [
+                { id: 10, name: 'Brooks Ghost 15', seller: 'Decathlon Running', price: 129.99, originalPrice: 159.99, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200', attributes: ['DNA LOFT Cushion', 'Arch Support', 'Breathable Mesh'], match: 96, marketplace: 'Decathlon' },
+                { id: 11, name: 'ASICS Gel-Kayano 30', seller: 'Best Buy Sports', price: 139.99, originalPrice: 179.99, image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=200', attributes: ['Stability', 'Gel Technology', 'FF BLAST+'], match: 94, marketplace: 'Best Buy' },
+                { id: 12, name: 'New Balance Fresh Foam', seller: 'Urban Runners', price: 119.99, originalPrice: 149.99, image: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=200', attributes: ['Fresh Foam X', 'Wide Available', 'Ortholite'], match: 91, marketplace: 'Urban Outfitters' },
+                { id: 13, name: 'Hoka Clifton 9', seller: 'Nordstrom Active', price: 149.99, originalPrice: 169.99, image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=200', attributes: ['Max Cushion', 'Meta-Rocker', 'Lightweight'], match: 89, marketplace: 'Nordstrom' }
+            ],
+            'fashion': [
+                { id: 14, name: 'Patagonia Organic Tee', seller: 'Decathlon Eco', price: 45.99, originalPrice: 59.99, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200', attributes: ['100% Organic', 'Fair Trade', 'EU Made'], match: 95, marketplace: 'Decathlon' },
+                { id: 15, name: 'Arket Linen Shirt', seller: 'H&M Sustainable', price: 69.99, originalPrice: 89.99, image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=200', attributes: ['European Linen', 'OEKO-TEX', 'Portugal'], match: 93, marketplace: 'H&M' },
+                { id: 16, name: 'COS Wool Blazer', seller: 'Galeries Lafayette', price: 149.99, originalPrice: 199.99, image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=200', attributes: ['RWS Wool', 'Italian Fabric', 'Timeless'], match: 90, marketplace: 'Galeries Lafayette' }
+            ]
+        };
+
+        const summaries = {
+            'headphones': "Based on your requirements for wireless headphones under €100 with noise cancellation, I recommend the **Sony WH-1000XM5** (currently €89.99). It offers industry-leading ANC, exceptional 30-hour battery life, and is available from Best Buy Marketplace with fast shipping. The JBL Live 660NC is a great budget alternative at €69.99 if you prefer longer battery life.",
+            'bags': "For business travel, the **Samsonite Classic Leather** briefcase stands out with genuine leather construction, dedicated laptop sleeve, and TSA-friendly design. At €189.99 (down from €249.99), it offers excellent value. The Tumi Alpha is premium but pricier at €249.99. Both are available from trusted Mirakl marketplace sellers.",
+            'shoes': "For running shoes with arch support, the **Brooks Ghost 15** scores highest in our analysis. Its DNA LOFT cushioning and dedicated arch support make it ideal for your needs at €129.99. The ASICS Gel-Kayano 30 offers superior stability if you're an overpronator. All options available with free shipping.",
+            'fashion': "For sustainable European fashion, the **Patagonia Organic Tee** leads with 100% organic cotton and Fair Trade certification at €45.99. Arket and COS offer premium European-made options with excellent sustainability credentials. All items ship from within the EU for minimal carbon footprint."
+        };
+
+        function useSuggestion(element) {
+            document.getElementById('searchInput').value = element.textContent;
+            search();
+        }
+
+        function search() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            if (!query) return;
+
+            // Show agent panel
+            const agentPanel = document.getElementById('agentPanel');
+            agentPanel.classList.add('active');
+            
+            // Hide previous results
+            document.getElementById('resultsSection').classList.remove('active');
+            document.getElementById('filtersSection').style.display = 'none';
+            document.getElementById('summaryCard').style.display = 'none';
+            
+            // Reset steps
+            document.querySelectorAll('.step-item').forEach(step => {
+                step.classList.remove('active', 'complete');
+            });
+
+            // Animate steps
+            const steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
+            let currentStep = 0;
+
+            const stepInterval = setInterval(() => {
+                if (currentStep > 0) {
+                    document.getElementById(steps[currentStep - 1]).classList.remove('active');
+                    document.getElementById(steps[currentStep - 1]).classList.add('complete');
+                    document.getElementById(steps[currentStep - 1]).querySelector('.step-icon').textContent = '✓';
+                }
+                
+                if (currentStep < steps.length) {
+                    document.getElementById(steps[currentStep]).classList.add('active');
+                    currentStep++;
+                } else {
+                    clearInterval(stepInterval);
+                    document.getElementById('agentStatus').innerHTML = 'Search complete!';
+                    setTimeout(() => showResults(query), 500);
+                }
+            }, 600);
+        }
+
+        function showResults(query) {
+            // Determine which products to show based on query
+            let products = [];
+            let category = '';
+            
+            if (query.includes('headphone') || query.includes('wireless') || query.includes('noise')) {
+                products = mockProducts.headphones;
+                category = 'headphones';
+            } else if (query.includes('bag') || query.includes('leather') || query.includes('travel')) {
+                products = mockProducts.bags;
+                category = 'bags';
+            } else if (query.includes('shoe') || query.includes('running') || query.includes('arch')) {
+                products = mockProducts.shoes;
+                category = 'shoes';
+            } else if (query.includes('fashion') || query.includes('sustainable') || query.includes('european')) {
+                products = mockProducts.fashion;
+                category = 'fashion';
+            } else {
+                products = mockProducts.headphones;
+                category = 'headphones';
+            }
+
+            // Show filters
+            document.getElementById('filtersSection').style.display = 'block';
+
+            // Render results
+            const resultsContainer = document.getElementById('productResults');
+            resultsContainer.innerHTML = products.map((product, index) => `
+                <div class="product-card ${index === 0 ? 'recommended' : ''}">
+                    <div class="product-thumb">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-seller">${product.seller} · ${product.marketplace}</div>
+                        <div class="product-attributes">
+                            ${product.attributes.map(attr => `<span class="attr-tag">${attr}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="product-pricing">
+                        <div class="product-price">€${product.price}</div>
+                        <div class="product-original-price">€${product.originalPrice}</div>
+                        <div class="match-score">🎯 ${product.match}% match</div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('resultsCount').textContent = `${products.length} products found across ${Math.floor(Math.random() * 8 + 8)} marketplaces`;
+            document.getElementById('resultsSection').classList.add('active');
+
+            // Render comparison table
+            renderComparison(products.slice(0, 3));
+            document.getElementById('comparisonSection').classList.add('active');
+
+            // Update metrics
+            document.getElementById('marketplaceCount').textContent = Math.floor(Math.random() * 50 + 400);
+            document.getElementById('marketplaceSubtitle').textContent = 'Mirakl-powered stores searched';
+            document.getElementById('queryTime').textContent = (Math.random() * 1.5 + 0.8).toFixed(2) + 's';
+            document.getElementById('productsAnalyzed').textContent = Math.floor(Math.random() * 500 + 1500);
+            
+            const prices = products.map(p => p.price);
+            document.getElementById('priceRange').textContent = `€${Math.min(...prices)} - €${Math.max(...prices)}`;
+            document.getElementById('avgMatch').textContent = Math.floor(products.reduce((a, b) => a + b.match, 0) / products.length) + '%';
+
+            // Show AI summary
+            document.getElementById('summaryCard').style.display = 'block';
+            document.getElementById('summaryText').innerHTML = summaries[category];
+
+            showToast('Search Complete!', `Found ${products.length} matching products`);
+        }
+
+        function renderComparison(products) {
+            const table = document.getElementById('comparisonTable');
+            const features = ['Price', 'Match Score', 'Marketplace', 'Free Shipping', 'In Stock'];
+            
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        ${products.map(p => `<th>${p.name.split(' ').slice(0, 2).join(' ')}</th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Price</td>
+                        ${products.map(p => `<td><strong>€${p.price}</strong></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Match Score</td>
+                        ${products.map(p => `<td>${p.match}%</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Marketplace</td>
+                        ${products.map(p => `<td>${p.marketplace}</td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>Free Shipping</td>
+                        ${products.map(() => `<td><span class="check-icon">✓</span></td>`).join('')}
+                    </tr>
+                    <tr>
+                        <td>In Stock</td>
+                        ${products.map(() => `<td><span class="check-icon">✓</span></td>`).join('')}
+                    </tr>
+                </tbody>
+            `;
+        }
+
+        function toggleFilter(element) {
+            element.classList.toggle('active');
+        }
+
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
